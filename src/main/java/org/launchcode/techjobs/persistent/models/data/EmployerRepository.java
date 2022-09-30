@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.CrudRepository;
 
 @Repository
-public interface EmployerRepository extends CrudRepository {
+public interface EmployerRepository extends CrudRepository<Employer, Integer> {
 }
