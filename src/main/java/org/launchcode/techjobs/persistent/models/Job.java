@@ -12,11 +12,11 @@ public class Job extends AbstractEntity{
     @ManyToMany
     private List<Skill> skills = new ArrayList<>();
 
-    @Id
-    @GeneratedValue
-    private int id;
-
-    private String name;
+//    @Id
+//    @GeneratedValue
+//    private int id;
+//
+//    private String name;
 
 //    private String employer;
 //    private String skills;
