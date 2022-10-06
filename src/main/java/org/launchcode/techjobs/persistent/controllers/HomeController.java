@@ -35,9 +35,7 @@ public class HomeController {
     public String index(Model model) {
 
         model.addAttribute("title", "My Jobs");
-        Iterable<Job> jobs;
-        jobs = jobRepository.findAll();
-        model.addAttribute("jobs", jobs);
+        model.addAttribute("jobs", jobRepository.findAll());
         return "index";
     }
 
@@ -55,13 +53,18 @@ public class HomeController {
                                        Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Job");
             return "add";
         }
-        Employer newEmployer = employerRepository.findById(employerId).orElse(new Employer());
-        newJob.setEmployer(newEmployer);
-        List<Skill> skillObject = (List<Skill>) skillRepository.findAllById(skills);
-        newJob.setSkills(skillObject);
+        Optional optEmployer = employerRepository.findById(employerId);
+        if (optEmployer.isPresent()) {
+            Employer employer = (Employer) optEmployer.get();
+            newJob.setEmployer(employer);
+        }
+
+        List<Skill> skillObjs = (List<Skill>) skillRepository.findAllById(skills);
+        newJob.setSkills(skillObjs);
+
+        jobRepository.save(newJob);
         return "redirect:";
     }
 
